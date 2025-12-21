@@ -24,7 +24,7 @@ def load_environment(
 
     parser = vf.Parser(extract_fn=extract_boxed_answer)
     math_rubric = vf.MathRubric(parser=parser)
-    vf_env = vf.PythonEnv(
+    return vf.PythonEnv(
         dataset=dataset,
         system_prompt=system_prompt,
         parser=parser,
@@ -42,7 +42,3 @@ def load_environment(
         timeout_per_command_seconds=sandbox_timeout_per_command_seconds,
         **kwargs,
     )
-    assert vf_env.tools is not None
-    tool_rubric = vf.ToolRubric(tools=vf_env.tools)
-    vf_env.rubric = vf.RubricGroup(rubrics=[tool_rubric, vf_env.rubric])
-    return vf_env
